@@ -1,0 +1,173 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	background-color:#0F8A8A;
+	padding:0px;
+	margin:0px;
+}
+.main{
+	margin:auto;
+	width:800px;
+	height:600px;
+	background-image:url(res/image/bg.png);
+}
+.top1{
+	width:800px;
+	height:40px;
+	/*background-color:#046;*/
+}
+.top2{
+	width:620px;
+	height:144px;
+	/*background-color:#006;*/
+	padding-left:180px;
+}
+
+.left1{
+	width:140px;
+	height:232px;
+	/*background-color:#406;*/
+	float:left;
+	margin-left:10px;
+}
+
+.bg{
+	margin:auto;
+	width:500px;
+	height:232px;
+	/*background-image:url(res/image/bg1.png);*/
+	float:left;
+}
+
+.right1{
+	margin-top:-38px;
+	width:150px;
+	height:232px;
+	/*background-color:#406;*/
+	float:right;
+}
+
+.button1{
+	clear:both;
+	width:620px;
+	height:144px;
+	/*background-color:#006;*/
+	padding-left:70px;
+}
+.button2{
+	width:800px;
+	height:40px;
+	/*background-color:#046;*/
+}
+.VSPop{
+	text-align:center;
+	color:#CF3;
+	font-family:"微软雅黑";
+	font-size:23px;
+	font-weight:600;
+	margin:auto;
+	padding-top:8px;
+}
+.pai_style{
+	margin-right:10px;
+	width:102px;
+	height:144px;
+	background-image:url(res/image/tc.jpg);
+	float:left;
+}
+.ppp{
+	margin-right:10px;
+	width:102px;
+	height:100px;
+	background-image:url(res/image/tc.jpg);
+	float:left;
+}
+#com_pai_1{
+}
+#com_pai_2{
+}
+#com_pai_3{
+}
+#com_pai_4{
+}
+
+#player_pai_1{
+}
+#player_pai_2{
+}
+#player_pai_3{
+}
+#player_pai_4{
+}
+.gg{
+	text-align:center;
+	color:#F3F3F3;
+	font-family:"微软雅黑";
+	font-size:20px;
+	font-weight:600;
+	margin:auto;
+}
+.gg_JS{
+	color:#F3F3F3;
+	font-family:"微软雅黑";
+	font-size:20px;
+	font-weight:600;
+	margin:auto;
+}
+.cz{
+	text-align:center;
+	color:#F3F3F3;
+	font-family:"微软雅黑";
+	font-size:26px;
+	font-weight:600;
+	margin:auto;
+}
+.cz_XX{
+	width:85px;
+	height:25px;
+	padding-top:5px;
+	background-image:url(res/image/b1.png);
+	text-align:center;
+	color:#000;
+	font-family:"微软雅黑";
+	font-size:16px;
+	font-weight:600;
+	margin:auto;
+	margin-top:7px;
+	cursor:pointer;
+}
+.cz_XX:hover{
+	background-image:url(res/image/b2.png);
+	color:#333;
+}
+
+.mainGG1{
+	margin-top:100px;
+	width:120px;
+	height:300px;
+	background-image:url(res/image/广告L.png);
+	float:left;
+}
+.mainGG2{
+	margin-top:100px;
+	width:120px;
+	height:300px;
+	background-image:url(res/image/广告R.png);
+	float:right;
+}
+.wf{
+	width:200px;
+	height:400px;
+	position:absolute;
+	top:100px;
+	left:-200px;
+	background-image:url(res/image/help.png);
+	color:#FFF;
+	cursor:default;
+}
+.mainGG1:hover{
+	background-color:#F2F2F2;
+}
+.mainGG2:hover{
+	background-color:#F2F2F2;
+}

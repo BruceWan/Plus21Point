@@ -1,0 +1,867 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="author" content="BruceWan" />
+    <meta name="generator" content="Softwan" />
+    <meta name="copyright" content="China by BruceWan" />
+    <meta name="keywords" content="游戏,小游戏,21,21点,益智,益智游戏,游戏平台" />
+    <meta name="description" content="游戏中心的游戏可以免费玩耍，如有问题请联系E-mail:1101587171@qq.com" />
+    <title>----欢迎光临---21点----游戏中心</title>
+    <link href="style_index.css" rel="stylesheet" type="text/css" />
+    <script language="javascript">
+<!--
+window.onload=load_main;
+
+
+function load_main()
+{
+    gunDong();
+    soundOFFOrOn();
+	getCookie("bg");
+}
+
+function gunDong()
+{
+	document.title=document.title.substring(1,document.title.length)+document.title.substring(0,1);
+	window.setTimeout("gunDong()",800);
+}
+
+function hF()
+{
+	var color=Math.floor(Math.random()*255)+",123,"+Math.floor(Math.random()*255);
+	document.body.bgColor="rgb("+color+")";
+	setCookie("bg",color);
+}
+
+function hR()
+{
+	var p=Math.floor(Math.random()*5);
+	var c=Math.floor(Math.random()*5);
+	if(p==2){return;}
+	document.getElementById("touxiang_com").src="res/image/p"+p+".png";
+	/*document.getElementById("touxiang_player").src="res/image/p"+c+".png";*/
+}
+
+function closeFrom()
+{
+	window.close();
+}
+
+
+function clearGG(){
+	var x=document.getElementById("GGX1");
+	x.parentNode.removeChild(x);
+	x=document.getElementById("GGX2");
+	x.parentNode.removeChild(x);
+}
+
+
+var a=-200;
+var hd;
+function help()
+{
+	try{
+	clearGG();
+	clearInterval(hd);}catch(err){}
+
+	a=-200;
+	hd=setInterval("helpGD()",10);
+}
+function helpGD()
+{
+	a+=10;
+	document.getElementById("helpid").style.left=a+"px";
+	if(a==0)
+	{
+		clearInterval(hd);
+	}
+}
+function help_del()
+{
+	document.getElementById("helpid").style.left="-200px";
+}
+
+var soundIsOn=false;
+var playStatus="未进行";
+function soundOFFOrOn()
+{
+	var bgs=document.getElementById("bgs");
+	var soundkg=document.getElementById("soundKG");
+	if(soundIsOn)
+	{
+		bgs.src="";
+		soundkg.innerHTML="声-开";
+		soundIsOn=false;
+	}
+	else
+	{
+		soundIsOn=true;
+		playSound(playStatus);
+		soundkg.innerHTML="声-关";
+	}
+}
+
+function playSound(type)
+{
+	var bgs=document.getElementById("bgs");
+	var soundkg=document.getElementById("soundKG");
+	if(soundIsOn)
+	{
+		switch(type)
+		{
+			case "未进行":
+				bgs.src="res/sound/bg1.mp3";
+			break;
+			case "摸牌":
+				bgs.src="res/sound/give.wav";
+			break;
+			case "正在进行":
+				bgs.src="res/sound/bg.mp3";
+			break;
+			case "输":
+				bgs.src="res/sound/lose.mp3";
+			break;
+			case "赢":
+				bgs.src="res/sound/win.mp3";
+			break;
+			case "爆":
+				bgs.src="res/sound/bg2.mp3";
+			break;
+			case "无声":
+				bgs.src="";
+			break;
+		}
+	}
+}
+
+
+function setCookie(name,value)
+{
+    name="21Point."+name;
+	var date=new Date();
+	var expireDays=365*24*3600*1000;
+	date.setTime(date.getTime()+expireDays);
+	document.cookie=name+"=" +value+";expire="+date.toGMTString();
+}
+
+function getCookie(name)
+{
+    name="21Point."+name;
+/*	var str=document.cookie;
+	var arr=str.split(";");
+	try
+	{
+		document.body.bgColor="#157B23";//先调用默认
+		if((arr[0][0]+"")!="_"&&(arr[0][0]+"")!="undefined")
+		{
+			document.body.bgColor="rgb("+arr[0].split("=")[1]+")";
+		}
+	}
+	catch(e)
+	{
+		document.body.bgColor="#157B23";
+	}*/
+}
+
+var paiCi=null;
+var computer_Pai=null;
+var computer_Pai_ID=null;
+var player_Pai=null;
+var fs_Win=0;
+var fs_Shu=0;
+var fs_Ping=0;
+
+function chushihua_PaiCi()
+{
+	paiCi=new Array();
+	for(var i=0;i<52;i++)
+	{
+		paiCi.push(i);
+	}
+}
+
+function chushihua_Computer_Pai()
+{
+	computer_Pai=new Array();
+}
+function chushihua_Computer_Pai_ID()
+{
+	computer_Pai_ID=new Array();
+}
+function chushihua_Player_Pai()
+{
+	player_Pai=new Array();
+}
+
+
+function get_Pai()
+{
+	var P=Math.floor(Math.random()*paiCi.length);
+	P=paiCi.splice(P,1);
+
+	var fs=Math.floor(P/4)+1;
+	if(fs>=10)
+	{
+		fs=10;
+	}
+	var res=new Array(P,fs);
+	playSound("摸牌");
+	return res;
+}
+
+
+var isStart=false;
+function start()
+{
+	if(!isStart)
+	{
+		chushihua_PaiCi();
+		chushihua_Computer_Pai();
+		chushihua_Computer_Pai_ID();
+		chushihua_Player_Pai();
+		document.getElementById("status").innerHTML="玩&nbsp;&nbsp;家&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		document.getElementById("win_NO").innerHTML="赢：000场";
+		document.getElementById("shu_NO").innerHTML="输：000场";
+		document.getElementById("ping_NO").innerHTML="平：000场";
+
+		chushihua_comXS();
+
+
+		comXS(get_Pai());
+		comXS(get_Pai());
+
+
+		playerXS(get_Pai());
+		playerXS(get_Pai());
+
+		isStart=true;
+		playStatus="正在进行";
+		playSound(playStatus);
+
+		deng21Dian();
+		if(!is21)
+		{
+			getStartIndex();//随机确定先后
+		}
+	}
+}
+
+function chushihua_comXS()
+{
+	document.getElementById("com_pai_1").src="res/image/tc.png";
+	document.getElementById("com_pai_2").src="res/image/tc.png";
+	document.getElementById("com_pai_3").src="res/image/tc.png";
+	document.getElementById("com_pai_4").src="res/image/tc.png";
+
+	document.getElementById("player_pai_1").src="res/image/tc.png";
+	document.getElementById("player_pai_2").src="res/image/tc.png";
+	document.getElementById("player_pai_3").src="res/image/tc.png";
+	document.getElementById("player_pai_4").src="res/image/tc.png";
+}
+
+
+function comXS(res)
+{
+	switch(computer_Pai.length)
+	{
+		case 0:
+		document.getElementById("com_pai_1").src="res/image/c.png";
+			computer_Pai.push(res[1]);
+			computer_Pai_ID.push(res[0]);
+		break;
+		case 1:
+			document.getElementById("com_pai_2").src="res/image/"+res[0]+".jpg";
+			computer_Pai.push(res[1]);
+			computer_Pai_ID.push(res[0]);
+		break;
+		case 2:
+			document.getElementById("com_pai_3").src="res/image/"+res[0]+".jpg";
+			computer_Pai.push(res[1]);
+			computer_Pai_ID.push(res[0]);
+		break;
+		case 3:
+			document.getElementById("com_pai_4").src="res/image/"+res[0]+".jpg";
+			computer_Pai.push(res[1]);
+			computer_Pai_ID.push(res[0]);
+		break;
+	}
+}
+
+function comXS_End()
+{
+	for(var i=0;i<computer_Pai_ID.length;i++)
+	{
+		switch(i)
+		{
+			case 0:
+				document.getElementById("com_pai_1").src="res/image/"+computer_Pai_ID[i]+".jpg";
+			break;
+			case 1:
+				document.getElementById("com_pai_2").src="res/image/"+computer_Pai_ID[i]+".jpg";
+			break;
+			case 2:
+				document.getElementById("com_pai_3").src="res/image/"+computer_Pai_ID[i]+".jpg";
+			break;
+			case 3:
+				document.getElementById("com_pai_4").src="res/image/"+computer_Pai_ID[i]+".jpg";
+			break;
+		}
+	}
+}
+
+function playerXS(res)
+{
+	switch(player_Pai.length)
+	{
+		case 0:
+			document.getElementById("player_pai_1").src="res/image/"+res[0]+".jpg";
+			player_Pai.push(res[1]);
+		break;
+		case 1:
+			document.getElementById("player_pai_2").src="res/image/"+res[0]+".jpg";
+			player_Pai.push(res[1]);
+		break;
+		case 2:
+			document.getElementById("player_pai_3").src="res/image/"+res[0]+".jpg";
+			player_Pai.push(res[1]);
+		break;
+		case 3:
+			document.getElementById("player_pai_4").src="res/image/"+res[0]+".jpg";
+			player_Pai.push(res[1]);
+		break;
+	}
+}
+
+
+var player_NO_Pai=false;
+function noHave()
+{
+	if(playStatus!="未进行"&&!com_ZX)
+	{
+		player_NO_Pai=true;
+		if(!isBX&&!com_NOPai)
+		{
+			computer_ZX();
+		}
+		else if(com_NOPai)
+		{
+			jsSF();
+			comXS_End();
+			return;
+		}
+	}
+}
+
+function jsSF()
+{
+	var com=getFen_com();
+	var player=getFen_player();
+
+	if(com>player)
+	{
+		fs_Shu+=1;
+		document.getElementById("shu_NO").innerHTML="输："+fs_Shu+"场";
+		playSound("输");
+		playStatus="未进行"
+		document.getElementById("player_Info").innerHTML="输";
+	}
+	else if(com<player)
+	{
+		fs_Win+=1;
+		document.getElementById("win_NO").innerHTML="赢："+fs_Win+"场";
+		playSound("赢");
+		playStatus="未进行"
+		document.getElementById("player_Info").innerHTML="赢";
+	}
+	else
+	{
+		fs_Ping+=1;
+		document.getElementById("ping_NO").innerHTML="平："+fs_Ping+"场";
+		playSound("无声");
+		playStatus="未进行"
+		document.getElementById("player_Info").innerHTML="平&nbsp;&nbsp;局";
+	}
+}
+
+function retry()
+{
+	if(isStart)
+	{
+		try{clearInterval(com_wait);}
+		catch(error){}
+		document.getElementById("computer_txt").innerHTML="电&nbsp;&nbsp;脑";
+		document.getElementById("player_Info").innerHTML="";
+
+		chushihua_PaiCi();
+		chushihua_Computer_Pai();
+		chushihua_Computer_Pai_ID();
+		chushihua_Player_Pai();
+		com_ZX=false;
+		player_NO_Pai=false;
+		isBX=false;
+		com_NOPai=false;
+		chushihua_comXS();
+		is21=false;
+
+		comXS(get_Pai());
+
+		comXS(get_Pai());
+
+		playerXS(get_Pai());
+
+		playerXS(get_Pai());
+
+		isStart=true;
+		playStatus="正在进行";
+		playSound(playStatus);
+
+		deng21Dian();
+		if(!is21)
+		{
+			getStartIndex();
+		}
+	}
+}
+
+function getStartIndex()
+{
+	var i=Math.floor(Math.random()*5);
+	if(i%2==0)
+	{
+		computer_ZX();
+	}
+}
+
+var com_ZX=false;
+function have_Pai()
+{
+	if(!com_ZX&&playStatus=="正在进行")
+	{
+		playerXS(get_Pai());
+
+		var player=getFen_player();
+		if(player==21)
+		{
+			jsSF();
+			comXS_End();
+			return;
+		}
+		pD_isBZ_one("AAA");
+		if(!isBX&&!com_NOPai)
+		{
+			computer_ZX();
+		}
+		else if(com_NOPai)
+		{
+			pD_isBZ("AAA");
+		}
+	}
+}
+
+var com_wait;
+function computer_ZX()
+{
+	com_ZX=true;com_NOPai=false;
+	dd=0;js=0;
+	wait_Time=Math.floor(Math.random()*3)+1;
+	com_wait=setInterval("com_mn_txt()",500);
+}
+
+
+function com_SKWT()
+{
+	if(player_NO_Pai)
+	{
+		RGZN_1();
+		com_ZX=false;
+	}
+	else
+	{
+		RGZN_2();
+		com_ZX=false;
+		pD_isBZ("B");
+	}
+}
+
+function RGZN_1()
+{
+		var com=getFen_com();
+		if(com<21)
+		{
+			var player=getFen_player_noAnPai();
+			if(com>=(player+10))
+			{
+				jsSF();
+				comXS_End();
+			}
+			else if((21-com)>=10)
+			{
+				comXS(get_Pai());
+					pD_isBZ("C");
+				if(!isBX)
+				{
+					RGZN_1();
+				}
+			}
+			else if(com>18)
+			{
+				jsSF();
+				comXS_End();
+			}
+			else
+			{
+				var HorJ=Math.floor(Math.random()*100)%2;
+				if(HorJ==0)
+				{
+					jsSF();
+					comXS_End();
+				}
+				else
+				{
+					comXS(get_Pai());
+					pD_isBZ("D");
+					if(!isBX)
+					{
+						RGZN_1();
+					}
+				}
+			}
+		}
+		else if(com==21)
+		{
+			jsSF();
+			comXS_End();
+		}
+		else
+		{
+			pD_isBZ("E");
+		}
+
+
+		com=getFen_com();
+		if(21-com>=10)
+		{
+			RGZN_1();
+		}
+}
+
+var com_NOPai=false;
+function RGZN_2()
+{
+		var com=getFen_com();
+		if(com<21)
+		{
+			if(21-com>=10)
+			{
+				comXS(get_Pai());
+			}
+			else if(com>18)
+			{
+				com_NOPai=true;
+				document.getElementById("computer_txt").innerHTML="电&nbsp;&nbsp;脑：不要了";
+			}
+			else
+			{
+				var HorJ=Math.floor(Math.random()*100)%2;
+				if(HorJ==0)
+				{
+					com_NOPai=true;
+					document.getElementById("computer_txt").innerHTML="电&nbsp;&nbsp;脑：不要了";
+				}
+				else
+				{
+					comXS(get_Pai());
+				}
+			}
+		}
+		else if(com==21)
+		{
+			jsSF();
+			comXS_End();
+		}
+		else
+		{
+			pD_isBZ();
+		}
+}
+
+var is21=false;
+function deng21Dian()
+{
+	var player=getFen_player();
+	var com=getFen_com();
+	if(player==com&&com==21&&player==21)
+	{
+		jsSF();
+		comXS_End();
+		is21=true;
+	}
+	else if(com==21)
+	{
+		jsSF();
+		comXS_End();
+		is21=true;
+	}
+	else if(player==21)
+	{
+		jsSF();
+		comXS_End();
+		is21=true;
+	}
+}
+
+var dd=0;
+var js=0;
+var wait_Time=0;
+function com_mn_txt()
+{
+	if(dd==8)
+	{
+		dd=0;
+	}
+	var d="";
+	for(var i=0;i<dd;i++)
+	{
+		 d+=".";
+	}
+	document.getElementById("computer_txt").innerHTML="电&nbsp;&nbsp;脑：正在思考中"+d;
+	dd+=1;
+	if(js==wait_Time)
+	{
+		clearInterval(com_wait);
+		document.getElementById("computer_txt").innerHTML="电&nbsp;&nbsp;脑";
+		com_SKWT();
+	}
+	js+=1;
+}
+
+function getFen_com()
+{
+	var com=0;
+	var com1=0;
+	var com2=0;
+	for(i in computer_Pai)
+	{
+		if(computer_Pai[i]==1)
+		{
+			com1+=11;
+			com2+=1;
+		}
+		else
+		{
+			com1+=computer_Pai[i];
+			com2+=computer_Pai[i];
+		}
+	}
+	if(com1<=21)
+	{
+		com=com1;
+	}
+	else if(com2<=21)
+	{
+		com=com2;
+	}
+	else
+	{
+		com=com2;
+	}
+	return com;
+}
+function getFen_player()
+{
+	var player=0;
+	var player1=0;
+	var player2=0;
+	for(i in player_Pai)
+	{
+		if(player_Pai[i]==1)
+		{
+			player1+=11;
+			player2+=1;
+		}
+		else
+		{
+			player1+=player_Pai[i];
+			player2+=player_Pai[i];
+		}
+	}
+	if(player1<=21)
+	{
+		player=player1;
+	}
+	else if(player2<=21)
+	{
+		player=player2;
+	}
+	else
+	{
+		player=player2;
+	}
+	return player;
+}
+function getFen_player_noAnPai()
+{
+	var player=0;
+	var player1=0;
+	var player2=0;
+	for(var i=1;i< player_Pai.length;i++)
+	{
+		if(player_Pai[i]==1)
+		{
+			player1+=11;
+			player2+=1;
+		}
+		else
+		{
+			player1+=player_Pai[i];
+			player2+=player_Pai[i];
+		}
+	}
+	if(player1<=21)
+	{
+		player=player1;
+	}
+	else if(player2<=21)
+	{
+		player=player2;
+	}
+	else
+	{
+		player=player2;
+	}
+	return player;
+}
+
+
+var isBX=false;
+function pD_isBZ_one(ttt)
+{
+	var com=getFen_com();
+
+	var player=getFen_player();
+	if(com>21)
+	{
+		fs_Win+=1;
+		document.getElementById("win_NO").innerHTML="赢："+fs_Win+"场";
+		playSound("爆");
+		playStatus="未进行"
+		isBX=true;
+		comXS_End();
+		document.getElementById("computer_txt").innerHTML="电&nbsp;&nbsp;脑：已&nbsp;&nbsp;爆";
+	}
+	if(player>21)
+	{
+		fs_Shu+=1;
+		document.getElementById("shu_NO").innerHTML="输："+fs_Shu+"场";
+		playSound("爆");
+		playStatus="未进行"
+		isBX=true;
+		comXS_End();
+		document.getElementById("player_Info").innerHTML="已&nbsp;&nbsp;爆";
+	}
+}
+function pD_isBZ(ttt)
+{
+	pD_isBZ_one();
+	if(!isBX)
+	{
+	if(com_ZX)
+	{
+		if(computer_Pai.length==4)
+		{
+			jsSF();
+			comXS_End();
+			isBX=true;
+		}
+	}
+	else
+	{
+		if(player_Pai.length==4)
+		{
+			jsSF();
+			comXS_End();
+			isBX=true;
+		}
+	}
+	}
+}
+-->
+    </script>
+</head>
+
+<body>
+    <bgsound loop="1" src="" id="bgs" />
+
+
+    <div class="wf" id="helpid" onclick="help_del()">
+        <span><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;规则说明</b></span><br />
+        手中所有的牌点数之和不超过21点，谁更接近21点，就赢得游戏。<br />
+        1、2 到 10 的牌的点数就是其牌面的数字；<br />
+        2、J 、 Q 、 K 的点数是 10 分； <br />
+        3、A 有两种算法， 1 或者 11 ，如果 A 算为 11 时总和大于 21 ，则 A 算为 1 。例如 （ A, 8 ） 是 19 点，（ A, 7, J ） 则为 18 点。<br />
+        <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击退出</b>
+    </div>
+
+
+    <!--<div class="mainGG1" id="GGX1" onclick="clearGG()"></div>
+    <div class="mainGG2" id="GGX2" onclick="clearGG()"></div>-->
+
+    <div class="main">
+        <div class="top1">
+            <div class="VSPop" id="computer_txt">电&nbsp;&nbsp;脑</div>
+        </div>
+        <div class="top2">
+            <div class="pai_style"><img src="res/image/c.png" id="com_pai_1" /></div>
+            <div class="pai_style"><img src="res/image/c.png" id="com_pai_2" /></div>
+            <div class="pai_style"><img src="res/image/c.png" id="com_pai_3" /></div>
+            <div class="pai_style"><img src="res/image/c.png" id="com_pai_4" /></div>
+
+
+            <div class="ppp"><img src="res/image/p4.png" width="100px" height="100px" id="touxiang_com" /></div>
+        </div>
+
+        <div class="left1">
+            <br />
+            <div class="gg" id="status">状态:未开始&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <br />
+            <div class="gg_JS" id="win_NO">欢迎使用21点</div>
+            <br />
+            <div class="gg_JS" id="shu_NO">BruceWan</div>
+            <br />
+            <div class="gg_JS" id="ping_NO"></div>
+        </div>
+
+        <div class="bg">
+        </div>
+
+        <div class="right1">
+            <div class="cz_XX" onclick="start()">开&nbsp;&nbsp;始</div>
+            <div class="cz_XX" onclick="have_Pai()">要&nbsp;&nbsp;牌</div>
+            <div class="cz_XX" onclick="noHave()">不&nbsp;&nbsp;要</div>
+            <div class="cz_XX" onclick="retry()">重&nbsp;&nbsp;来</div>
+            <div class="cz_XX" onclick="soundOFFOrOn()" id="soundKG">声-开</div>
+            <!--<div class="cz_XX" onclick="hF()">换肤</div>-->
+            <div class="cz_XX" onclick="hR()">换&nbsp;&nbsp;人</div>
+            <div class="cz_XX" onclick="help()">帮&nbsp;&nbsp;助</div>
+            <div class="cz_XX" onclick="closeFrom()">退&nbsp;&nbsp;出</div>
+        </div>
+
+
+        <div class="button1">
+            <div class="ppp"><img src="res/image/p2.png" width="100px" height="100px" id="touxiang_player" /></div>
+
+            <div class="pai_style"><img src="res/image/c.png" id="player_pai_1" /></div>
+            <div class="pai_style"><img src="res/image/c.png" id="player_pai_2" /></div>
+            <div class="pai_style"><img src="res/image/c.png" id="player_pai_3" /></div>
+            <div class="pai_style"><img src="res/image/c.png" id="player_pai_4" /></div>
+        </div>
+        <div class="button2">
+            <div class="VSPop" id="player_Info"></div>
+        </div>
+
+    </div>
+
+
+</body>
+</html>
