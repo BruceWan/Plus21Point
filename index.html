@@ -490,43 +490,55 @@ function RGZN_1()
 		if(com<21)
 		{
 			var player=getFen_player_noAnPai();
-			if(com>=(player+10))
-			{
-				jsSF();
-				comXS_End();
-			}
-			else if((21-com)>=10)
-			{
-				comXS(get_Pai());
-					pD_isBZ("C");
-				if(!isBX)
-				{
-					RGZN_1();
-				}
-			}
-			else if(com>18)
-			{
-				jsSF();
-				comXS_End();
-			}
-			else
-			{
-				var HorJ=Math.floor(Math.random()*100)%2;
-				if(HorJ==0)
-				{
-					jsSF();
-					comXS_End();
-				}
-				else
-				{
-					comXS(get_Pai());
-					pD_isBZ("D");
-					if(!isBX)
-					{
-						RGZN_1();
-					}
-				}
-			}
+            if(com<player+1)
+            {
+        		comXS(get_Pai());
+    			pD_isBZ("D");
+    			if(!isBX)
+    			{
+    				RGZN_1();
+    			}
+            }
+            else
+            {
+    			if(com>=(player+10))
+    			{
+    				jsSF();
+    				comXS_End();
+    			}
+    			else if((21-com)>=10)
+    			{
+    				comXS(get_Pai());
+    					pD_isBZ("C");
+    				if(!isBX)
+    				{
+    					RGZN_1();
+    				}
+    			}
+    			else if(com>18)
+    			{
+    				jsSF();
+    				comXS_End();
+    			}
+    			else
+    			{
+    				var HorJ=Math.floor(Math.random()*100)%2;
+    				if(HorJ==0)
+    				{
+    					jsSF();
+    					comXS_End();
+    				}
+    				else
+    				{
+    					comXS(get_Pai());
+    					pD_isBZ("D");
+    					if(!isBX)
+    					{
+    						RGZN_1();
+    					}
+    				}
+    			}
+            }
 		}
 		else if(com==21)
 		{
